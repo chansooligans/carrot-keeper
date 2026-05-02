@@ -48,12 +48,47 @@
       border-radius: 6px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
+    /* Cover-art overlay shown during the title sequence — replaced by canvas after start */
+    #cover-stack {
+      position: relative;
+      width: 640px;
+      height: 576px;
+    }
+    #cover-stack canvas { position: absolute; top: 0; left: 0; }
+    #cover-art {
+      position: absolute;
+      top: 4px; left: 4px;
+      width: 632px;
+      height: 568px;
+      object-fit: cover;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease-in;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    #cover-art.visible { opacity: 1; }
+    #cover-art.fading  { opacity: 0; transition: opacity 0.6s ease-out; }
+    #cover-prompt {
+      position: absolute;
+      bottom: 18px;
+      left: 0; right: 0;
+      text-align: center;
+      color: #2b1c0a;
+      font-family: ui-monospace, monospace;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+      text-shadow: 0 0 8px #f4dd80, 0 0 14px #f4dd80;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #cover-prompt.visible { opacity: 1; animation: blink 1s infinite step-end; }
+    @keyframes blink { 50% { opacity: 0.3; } }
     @media (max-width: 700px) {
-      canvas#game {
-        width: 95vw;
-        height: calc(95vw * 0.9);
-        max-height: 65vh;
-      }
+      canvas#game,
+      #cover-stack { width: 95vw; height: calc(95vw * 0.9); max-height: 65vh; }
+      #cover-art { width: calc(100% - 8px); height: calc(100% - 8px); }
     }
     #footer {
       font-size: 11px;
@@ -123,7 +158,11 @@
 </head>
 <body>
   <div id="game-frame">
-    <canvas id="game" width="160" height="144"></canvas>
+    <div id="cover-stack">
+      <canvas id="game" width="160" height="144"></canvas>
+      <img id="cover-art" src="./assets/cover.png" alt="">
+      <div id="cover-prompt">PRESS Z TO BEGIN</div>
+    </div>
     <div id="footer">CARROT KEEPER · CH.1 · Z=action  X=cancel  arrows=move</div>
   </div>
   <div id="dpad">
