@@ -75,6 +75,11 @@ export class TitleScene extends Scene {
 
     if (this.phase === 'cover' || this.phase === 'fallback') {
       if (inp.pressed.a) {
+        // First user gesture — unlock audio and start the theme
+        this.game.audio.resume();
+        this.game.playSong('lodi');
+        this.game.audio.confirm();
+
         // Start the game state appropriately
         if (this.hasSave) this.game.load();
         else this.game.reset();

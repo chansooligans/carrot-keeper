@@ -23,6 +23,10 @@ export class BattleScene extends Scene {
     this.shake = 0;
     this.flash = 0;
     this.t = 0;
+    this.game.playSong('battle');
+  }
+  exit() {
+    // Battle scene popped — return music will be set by whoever resumes.
   }
 
   update(dt) {
@@ -59,6 +63,7 @@ export class BattleScene extends Scene {
     if (move.heal) this.you.hp = Math.min(this.you.maxHp, this.you.hp + move.heal);
     this.message = `Noddy used ${move.name}! (-${dmg})`;
     this.flash = 1;
+    this.game.audio.hit();
     if (this.foe.hp === 0) {
       this.message = 'The wolf yields and slips into the trees.';
       this.phase = 'end';
@@ -70,6 +75,7 @@ export class BattleScene extends Scene {
       this.you.hp = Math.max(0, this.you.hp - fd);
       this.shake = 4;
       this.message = `Wolf snapped! (-${fd})`;
+      this.game.audio.hit();
       this.game.flags.player_hp = this.you.hp;
       if (this.you.hp === 0) {
         this.message = 'You are knocked back...';

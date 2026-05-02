@@ -54,6 +54,7 @@ export class DialogScene extends Scene {
       return;
     }
     if (inp.pressed.a) {
+      this.game.audio.blip();
       this.pageIdx++;
       this.charProgress = 0;
       if (this.pageIdx >= this.pages.length) this.finish();

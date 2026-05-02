@@ -5,6 +5,7 @@ import { TitleScene } from './title.js';
 export class EndingScene extends Scene {
   enter() {
     this.t = 0;
+    this.game.playSong('foreboding');
   }
   update(dt) {
     this.t += dt;

@@ -20,6 +20,8 @@ export class FestivalCutscene extends Scene {
     this.shake = 0;
     this.fade = 0;
     this.dialogQueued = false;
+    this.thunderPlayed = false;
+    this.game.playSong('foreboding');
   }
 
   update(dt) {
@@ -45,6 +47,7 @@ export class FestivalCutscene extends Scene {
         ], { onEnd: () => { this.step = 2; this.t = 0; } }));
       }
     } else if (this.step === 2) {
+      if (!this.thunderPlayed) { this.game.audio.thunder(); this.thunderPlayed = true; }
       this.shake = 4;
       if (this.t > 0.6) {
         this.step = 3;
@@ -96,6 +99,7 @@ export class HandoffCutscene extends Scene {
     this.step = 0;
     this.t = 0;
     this.fade = 0;
+    this.game.playSong('foreboding');
     this.game.scenes.push(new DialogScene(this.game, [
       "Hazel: Noddy, take this. It was mine.",
       "(She presses an old satchel into your paws.)",

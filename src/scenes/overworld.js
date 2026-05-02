@@ -26,11 +26,13 @@ export class OverworldScene extends Scene {
     this.walkFrame = 0;
     this.justEntered = true;
     this.lockTimer = 0; // cooldown after dialog/cutscene to swallow held A
+    this.game.playSong('lodi');
   }
 
   resume() {
     this.justEntered = true;
     this.lockTimer = 6;
+    this.game.playSong('lodi');
   }
 
   currentMap() {
@@ -194,6 +196,7 @@ export class OverworldScene extends Scene {
     if (tile === 'C' && !g.flags['picked_' + tx + '_' + ty + '_' + g.player.map]) {
       g.flags['picked_' + tx + '_' + ty + '_' + g.player.map] = true;
       g.give('carrot', 1);
+      g.audio.pickup();
       g.scenes.push(new DialogScene(g, [`(You pick a fresh carrot.)`], { onEnd: (gg) => gg.save() }));
       this.lockTimer = 6;
       return;

@@ -5,10 +5,12 @@ import { Input } from './engine/input.js';
 import { SceneStack } from './engine/scene.js';
 import { Sprite } from './engine/sprite.js';
 import { Font } from './engine/font.js';
+import { AudioEngine } from './engine/audio.js';
 import { TILES, SPRITES } from './data/sprites.js';
 import { MAPS } from './data/maps.js';
 import { NPCS } from './data/npcs.js';
 import { ITEMS } from './data/items.js';
+import { SONGS } from './data/music.js';
 import { saveGame, loadGame, clearSave } from './engine/save.js';
 
 export class Game {
@@ -17,6 +19,8 @@ export class Game {
     this.r = new Renderer(canvas);
     this.input = new Input();
     this.font = new Font();
+    this.audio = new AudioEngine();
+    this.songs = SONGS;
     this.scenes = new SceneStack(this);
 
     // Bake assets
@@ -102,4 +106,11 @@ export class Game {
   npcAt(mapName, x, y) {
     return this.npcsOnMap(mapName).find(n => n.x === x && n.y === y) || null;
   }
+
+  // Convenience for scenes: play a song by name.
+  playSong(name) {
+    const song = this.songs[name];
+    if (song) this.audio.playSong(name, song);
+  }
+  stopSong() { this.audio.stopSong(); }
 }

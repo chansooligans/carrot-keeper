@@ -15,6 +15,8 @@ function frame(now) {
   last = now;
 
   game.input.beginFrame();
+  // Global mute toggle (M)
+  if (game.input.pressed.mute) game.audio.toggleMute();
   game.scenes.update(dt);
   game.scenes.render(game.r);
 

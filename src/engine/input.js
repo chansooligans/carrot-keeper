@@ -14,9 +14,10 @@ const KEY_MAP = {
   x: 'b', X: 'b',
   Escape: 'b',
   b: 'debugBattle', B: 'debugBattle',
+  m: 'mute', M: 'mute',
 };
 
-const ACTIONS = ['up', 'down', 'left', 'right', 'a', 'b', 'debugBattle'];
+const ACTIONS = ['up', 'down', 'left', 'right', 'a', 'b', 'debugBattle', 'mute'];
 
 export class Input {
   constructor() {
